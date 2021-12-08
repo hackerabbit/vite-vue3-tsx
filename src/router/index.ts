@@ -28,6 +28,22 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/login')
   },
   {
+    path: '/father',
+    name: 'father',
+    meta: {
+      type: 'father'
+    },
+    component: () => import('@/views/father')
+  },
+  {
+    path: '/route',
+    name: 'route',
+    meta: {
+      type: 'route'
+    },
+    component: () => import('@/views/route')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: '404',
     component: () => import('@/views/404')
@@ -43,13 +59,16 @@ const router = createRouter({
 router.beforeEach(
   (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const user = localStorage.getItem('user')
+    // console.log(user);
+    // console.log(to.meta.type)
     if (to.meta.type === 'login' && user) {
       next({ name: 'home' })
       return
     }
 
     if (to.meta.type === 'home' && !user) {
-      next({ name: 'login' })
+      // next({ name: 'login' })
+      next({ name: 'route' })
       return
     }
 
